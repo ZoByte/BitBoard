@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
-import { AppContext } from "../AppContext";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
+import { useSelector } from "react-redux";
+import { IState } from "../Redux/IState";
 
 const backgroundStyles = makeStyles({
   root: {
@@ -16,20 +17,21 @@ const backgroundStyles = makeStyles({
     transform: "scale(1.1)",
     filter: "blur(8px)"
   },
-  withDarken: (props: { darkness: string }) => ({
-    filter: `brightness(${props.darkness})`
+  withDarken: (props: { darkness: number }) => ({
+    filter: `brightness(${props.darkness}%)`
   })
 });
 
 export const BackgroundImage = () => {
-  const appState = useContext(AppContext);
-  const styles = backgroundStyles({ darkness: appState.darken });
+  const { blur, darkness } = useSelector((state: IState) => state);
+
+  const styles = backgroundStyles({ darkness });
 
   return (
     <div
-      className={`${styles.root} ${
-        appState.blur ? styles.withBlur : undefined
-      } ${appState.darken ? styles.withDarken : undefined}`}
+      className={`${styles.root} ${blur ? styles.withBlur : undefined} ${
+        darkness ? styles.withDarken : undefined
+      }`}
     ></div>
   );
 };

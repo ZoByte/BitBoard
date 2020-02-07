@@ -1,11 +1,13 @@
 import React from "react";
+import { IconButton, createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { Provider, useDispatch } from "react-redux";
 import "./App.css";
 import { Message } from "./Components/Message";
-import { IconButton, createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
 import { BackgroundImage } from "./Components/BackgroundImage";
 import { Contrast } from "./Components/Contrast";
-import { AppContextProvider } from "./AppContext";
+import { store } from "./Redux/store";
+import { SetDarkness } from "./Redux/AppReducer";
 
 const theme = createMuiTheme({
   palette: {
@@ -14,33 +16,28 @@ const theme = createMuiTheme({
 });
 
 const App = () => {
+  const dispatch = useDispatch();
+
   return (
     <div className="App">
-      <AppContextProvider>
-        <ThemeProvider theme={theme}>
-          <BackgroundImage />
-          <Message
-            message="hi"
-            position={{ x: "15%", y: "3%", width: "50%" }}
-          />
-          <Contrast>
-            <IconButton>
-              <Settings />
-            </IconButton>
-          </Contrast>
-        </ThemeProvider>
-      </AppContextProvider>
+      <BackgroundImage />
+      <Message message="hi" position={{ x: "15%", y: "3%", width: "50%" }} />
+      <Contrast>
+        <IconButton onClick={() => dispatch(SetDarkness(10))}>
+          <Settings />
+        </IconButton>
+      </Contrast>
     </div>
   );
 };
 
 const AppWithCTX = () => {
   return (
-    <AppContextProvider>
+    <Provider store={store}>
       <ThemeProvider theme={theme}>
         <App />
       </ThemeProvider>
-    </AppContextProvider>
+    </Provider>
   );
 };
 
