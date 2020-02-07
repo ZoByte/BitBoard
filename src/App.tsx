@@ -34,4 +34,14 @@ const App = () => {
   );
 };
 
-export default App;
+const AppWithCTX = () => {
+  return (
+    <AppContextProvider>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </AppContextProvider>
+  );
+};
+
+export default AppWithCTX;
