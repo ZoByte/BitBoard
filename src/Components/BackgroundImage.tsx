@@ -1,23 +1,35 @@
-import React, { CSSProperties, useEffect } from 'react'
+import React, { useContext } from "react";
+import { AppContext } from "../AppContext";
+import { makeStyles } from "@material-ui/core";
 
-export const BackgroundImage = (props: {
-    blur: boolean;
-}) => {
-    const imageStyle: CSSProperties = {
-        width: '100%', 
-        height: '100%', 
-        overflow: 'hidden',
-        position: 'absolute',
-        transform: props.blur ? 'scale(1.1)' : 'none',
-        backgroundSize: 'cover', 
-        backgroundRepeat: 'no-repeat', 
-        backgroundImage: 'url(https://source.unsplash.com/1920x1080/?mountains)',
-        filter: props.blur ? 'blur(8px)' : 'none'
-    };
+const backgroundStyles = makeStyles({
+  root: {
+    width: "100%",
+    height: "100%",
+    overflow: "hidden",
+    position: "absolute",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundImage: "url(https://source.unsplash.com/1920x1080/?mountains)"
+  },
+  withBlur: {
+    transform: "scale(1.1)",
+    filter: "blur(8px)"
+  },
+  withDarken: (props: { darkness: string }) => ({
+    filter: `brightness(${props.darkness})`
+  })
+});
 
-    return (
-        <div style={imageStyle}>
-            
-        </div>
-    )
-}
+export const BackgroundImage = () => {
+  const appState = useContext(AppContext);
+  const styles = backgroundStyles({ darkness: appState.darken });
+
+  return (
+    <div
+      className={`${styles.root} ${
+        appState.blur ? styles.withBlur : undefined
+      } ${appState.darken ? styles.withDarken : undefined}`}
+    ></div>
+  );
+};
