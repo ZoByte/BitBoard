@@ -5,7 +5,6 @@ export const Contrast = (props: { children: JSX.Element }) => {
   return (
     <div
       style={{
-        position: "absolute",
         paddingLeft: "4px",
         paddingRight: "4px",
         paddingTop: "4px",

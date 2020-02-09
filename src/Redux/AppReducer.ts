@@ -5,6 +5,7 @@ const appState: IState = {
   blur: 8,
   darkness: 30,
   bgQuery: "mountains",
+  editing: false,
   settingsDrawer: false
 };
 
@@ -15,6 +16,7 @@ function WithPayload<T>() {
 export const SetBlur = createAction("SET_BLUR", WithPayload<number>());
 export const SetDarkness = createAction("SET_DARKNESS", WithPayload<number>());
 export const SetBGQuery = createAction("SET_BG_QUERY", WithPayload<string>());
+export const ToggleEditing = createAction("TOGGLE_EDITING");
 export const ToggleSettingsDrawer = createAction("TOGGLE_SETTINGS_DRAWER");
 
 export const AppReducer = createReducer(appState, builder =>
@@ -30,6 +32,10 @@ export const AppReducer = createReducer(appState, builder =>
     .addCase(SetBGQuery, (state, action) => ({
       ...state,
       bgQuery: action.payload
+    }))
+    .addCase(ToggleEditing, (state, action) => ({
+      ...state,
+      editing: !state.editing
     }))
     .addCase(ToggleSettingsDrawer, state => ({
       ...state,

@@ -3,6 +3,8 @@ import { makeStyles, IconButton } from "@material-ui/core";
 import { Contrast } from "./Contrast";
 import { Settings } from "@material-ui/icons";
 import { SettingsDrawer } from "./SettingsDrawer";
+import { useSelector } from "react-redux";
+import { IState } from "../Redux/IState";
 
 const backgroundStyles = makeStyles({
   root: (props: { darkness: number; blur: number; bgQuery: string }) => ({
@@ -24,6 +26,7 @@ export const BackgroundImage = () => {
   const [darkness, setDarkness] = useState<number>(30);
   const [bgQuery, setBGQuery] = useState<string>("mountains");
   const styles = backgroundStyles({ darkness, blur, bgQuery });
+  const editing = useSelector((state: IState) => state.editing);
 
   const openSettings = () => {
     setSettingsOpen(true);
@@ -32,11 +35,17 @@ export const BackgroundImage = () => {
   return (
     <>
       <div className={styles.root}></div>
-      <Contrast>
-        <IconButton onClick={openSettings}>
-          <Settings />
-        </IconButton>
-      </Contrast>
+      {editing ? (
+        <div style={{ position: "absolute" }}>
+          <Contrast>
+            <IconButton onClick={openSettings}>
+              <Settings />
+            </IconButton>
+          </Contrast>
+        </div>
+      ) : (
+        undefined
+      )}
       <SettingsDrawer
         open={settingsOpen}
         setOpen={setSettingsOpen}
