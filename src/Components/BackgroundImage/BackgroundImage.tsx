@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import { makeStyles, IconButton } from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
-import { IState } from "../../Redux/IState";
 import { Contrast } from "../Contrast";
 import { Settings } from "@material-ui/icons";
-import { ToggleSettingsDrawer } from "../../Redux/AppReducer";
 import { SettingsDrawer } from "../SettingsDrawer";
 
 const backgroundStyles = makeStyles({

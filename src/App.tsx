@@ -5,7 +5,6 @@ import "./App.css";
 import { Message } from "./Components/Message";
 import { BackgroundImage } from "./Components/BackgroundImage/BackgroundImage";
 import { store } from "./Redux/store";
-import { SettingsDrawer } from "./Components/SettingsDrawer";
 
 const theme = createMuiTheme({
   palette: {

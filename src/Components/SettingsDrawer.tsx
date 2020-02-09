@@ -8,12 +8,6 @@ import {
   Slider,
   Input
 } from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
-import { IState } from "../Redux/IState";
-import { ToggleSettingsDrawer, SetBlur } from "../Redux/AppReducer";
-import { DarknessSlider } from "./BackgroundImage/Settings/DarknessSlider";
-import { BlurSlider } from "./BackgroundImage/Settings/BlurSlider";
-import { SourceQueryBox } from "./BackgroundImage/Settings/SourceQueryBox";
 
 const DrawerStyles = makeStyles((theme: Theme) => ({
   root: {
