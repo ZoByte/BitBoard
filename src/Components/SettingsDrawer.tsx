@@ -1,21 +1,11 @@
 import React from "react";
-import {
-  Drawer,
-  List,
-  Slider,
-  makeStyles,
-  Typography,
-  Theme
-} from "@material-ui/core";
+import { Drawer, List, makeStyles, Theme } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { IState } from "../Redux/IState";
-import {
-  ToggleSettingsDrawer,
-  SetDarkness,
-  SetBlur
-} from "../Redux/AppReducer";
+import { ToggleSettingsDrawer, SetBlur } from "../Redux/AppReducer";
 import { DarknessSlider } from "./Settings/DarknessSlider";
 import { BlurSlider } from "./Settings/BlurSlider";
+import { SourceQueryBox } from "./Settings/SourceQueryBox";
 
 const DrawerStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -29,9 +19,7 @@ const DrawerStyles = makeStyles((theme: Theme) => ({
 export const SettingsDrawer = () => {
   const dispatch = useDispatch();
   const classes = DrawerStyles();
-  const { settingsDrawer, darkness, blur } = useSelector(
-    (state: IState) => state
-  );
+  const { settingsDrawer } = useSelector((state: IState) => state);
 
   const updateBlur = (event: any, value: number | number[]) => {
     if (typeof value === "number") {
@@ -47,6 +35,7 @@ export const SettingsDrawer = () => {
       <List className={classes.root}>
         <DarknessSlider />
         <BlurSlider />
+        <SourceQueryBox />
       </List>
     </Drawer>
   );

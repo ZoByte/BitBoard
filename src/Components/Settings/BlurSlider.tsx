@@ -16,7 +16,7 @@ export const BlurSlider = () => {
 
   return (
     <>
-      <Typography gutterBottom>Darkness</Typography>
+      <Typography gutterBottom>Blur</Typography>
       <Slider
         defaultValue={blur}
         valueLabelDisplay={"auto"}

@@ -4,6 +4,7 @@ import { createAction, createReducer } from "@reduxjs/toolkit";
 const appState: IState = {
   blur: 8,
   darkness: 30,
+  bgQuery: "mountains",
   settingsDrawer: false
 };
 
@@ -13,6 +14,7 @@ function WithPayload<T>() {
 
 export const SetBlur = createAction("SET_BLUR", WithPayload<number>());
 export const SetDarkness = createAction("SET_DARKNESS", WithPayload<number>());
+export const SetBGQuery = createAction("SET_BG_QUERY", WithPayload<string>());
 export const ToggleSettingsDrawer = createAction("TOGGLE_SETTINGS_DRAWER");
 
 export const AppReducer = createReducer(appState, builder =>
@@ -24,6 +26,10 @@ export const AppReducer = createReducer(appState, builder =>
     .addCase(SetDarkness, (state, action) => ({
       ...state,
       darkness: action.payload
+    }))
+    .addCase(SetBGQuery, (state, action) => ({
+      ...state,
+      bgQuery: action.payload
     }))
     .addCase(ToggleSettingsDrawer, state => ({
       ...state,
