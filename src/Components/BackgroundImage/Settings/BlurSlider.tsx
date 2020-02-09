@@ -1,8 +1,8 @@
 import React from "react";
 import { Typography, Slider } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { SetBlur } from "../../Redux/AppReducer";
-import { IState } from "../../Redux/IState";
+import { SetBlur } from "../../../Redux/AppReducer";
+import { IState } from "../../../Redux/IState";
 
 export const BlurSlider = () => {
   const dispatch = useDispatch();

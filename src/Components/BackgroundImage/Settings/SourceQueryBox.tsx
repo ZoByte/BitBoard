@@ -1,8 +1,8 @@
 import React from "react";
 import { Typography, Input } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { SetBGQuery } from "../../Redux/AppReducer";
-import { IState } from "../../Redux/IState";
+import { SetBGQuery } from "../../../Redux/AppReducer";
+import { IState } from "../../../Redux/IState";
 
 export const SourceQueryBox = () => {
   const dispatch = useDispatch();

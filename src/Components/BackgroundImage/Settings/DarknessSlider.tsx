@@ -1,8 +1,8 @@
 import React from "react";
 import { Typography, Slider } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
-import { SetDarkness } from "../../Redux/AppReducer";
-import { IState } from "../../Redux/IState";
+import { SetDarkness } from "../../../Redux/AppReducer";
+import { IState } from "../../../Redux/IState";
 
 export const DarknessSlider = () => {
   const dispatch = useDispatch();

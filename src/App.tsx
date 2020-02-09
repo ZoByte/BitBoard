@@ -1,13 +1,10 @@
 import React from "react";
-import { IconButton, createMuiTheme, ThemeProvider } from "@material-ui/core";
-import { Provider, useDispatch } from "react-redux";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { Provider } from "react-redux";
 import "./App.css";
 import { Message } from "./Components/Message";
-import { Settings } from "@material-ui/icons";
-import { BackgroundImage } from "./Components/BackgroundImage";
-import { Contrast } from "./Components/Contrast";
+import { BackgroundImage } from "./Components/BackgroundImage/BackgroundImage";
 import { store } from "./Redux/store";
-import { ToggleSettingsDrawer } from "./Redux/AppReducer";
 import { SettingsDrawer } from "./Components/SettingsDrawer";
 
 const theme = createMuiTheme({
@@ -17,18 +14,10 @@ const theme = createMuiTheme({
 });
 
 const App = () => {
-  const dispatch = useDispatch();
-
   return (
     <div className="App">
       <BackgroundImage />
       <Message message="hi" position={{ x: "15%", y: "3%", width: "50%" }} />
-      <Contrast>
-        <IconButton onClick={() => dispatch(ToggleSettingsDrawer())}>
-          <Settings />
-        </IconButton>
-      </Contrast>
-      <SettingsDrawer />
     </div>
   );
 };
