@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { IState } from "../Redux/IState";
-import { Contrast } from "./Contrast";
 import { IconButton } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
 
@@ -24,7 +23,7 @@ export const Message = (props: {
       className="Message"
     >
       {editing ? (
-        <div>
+        <div style={{ float: "left" }}>
           <IconButton>
             <Settings style={{ fontSize: 18 }} />
           </IconButton>
