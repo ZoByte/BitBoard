@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { makeStyles, IconButton } from "@material-ui/core";
-import { Contrast } from "../Contrast";
+import { Contrast } from "./Contrast";
 import { Settings } from "@material-ui/icons";
-import { SettingsDrawer } from "../SettingsDrawer";
+import { SettingsDrawer } from "./SettingsDrawer";
 
 const backgroundStyles = makeStyles({
   root: (props: { darkness: number; blur: number; bgQuery: string }) => ({

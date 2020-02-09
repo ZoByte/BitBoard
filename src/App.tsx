@@ -3,7 +3,7 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import { Provider } from "react-redux";
 import "./App.css";
 import { Message } from "./Components/Message";
-import { BackgroundImage } from "./Components/BackgroundImage/BackgroundImage";
+import { BackgroundImage } from "./Components/BackgroundImage";
 import { store } from "./Redux/store";
 
 const theme = createMuiTheme({
