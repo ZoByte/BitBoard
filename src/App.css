@@ -1,3 +1,8 @@
+h1 {
+  padding: 0;
+  margin: 0;
+}
+
 .App {
   height: 100vh;
   width: 100vw;
@@ -5,7 +10,46 @@
   overflow: hidden;
 }
 
+.Grid {
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background-size: 10vw 10vh;
+  background-image: radial-gradient(
+      circle at top left,
+      rgba(128, 128, 128, 0.2),
+      rgba(128, 128, 128, 0.2) 4px,
+      transparent 1px,
+      transparent 100%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(128, 128, 128, 0.2),
+      rgba(128, 128, 128, 0.2) 4px,
+      transparent 1px,
+      transparent 100%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgba(128, 128, 128, 0.2),
+      rgba(128, 128, 128, 0.2) 4px,
+      transparent 1px,
+      transparent 100%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(128, 128, 128, 0.2),
+      rgba(128, 128, 128, 0.2) 4px,
+      transparent 1px,
+      transparent 100%
+    );
+}
+
 .Message {
   text-align: center;
   position: absolute;
+}
+
+.Message:hover {
+  background-color: rgba(0, 0, 0, 0.2);
 }

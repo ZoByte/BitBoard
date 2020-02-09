@@ -41,7 +41,7 @@ export const SettingsDrawer = (props: {
       <List className={classes.root}>
         {Object.keys(props.sliders).map(slider => {
           return (
-            <>
+            <React.Fragment key={slider}>
               <Typography gutterBottom>{slider}</Typography>
               <Slider
                 value={props.sliders[slider].get}
@@ -55,12 +55,12 @@ export const SettingsDrawer = (props: {
                   }
                 }}
               />
-            </>
+            </React.Fragment>
           );
         })}
         {Object.keys(props.textBoxes).map(text => {
           return (
-            <>
+            <React.Fragment key={text}>
               <Typography gutterBottom>Background Image Query</Typography>
               <Input
                 style={{ width: "100%" }}
@@ -73,7 +73,7 @@ export const SettingsDrawer = (props: {
                   props.textBoxes[text].set(event.target.value);
                 }}
               />
-            </>
+            </React.Fragment>
           );
         })}
       </List>
