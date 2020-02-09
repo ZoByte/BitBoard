@@ -1,5 +1,5 @@
 export interface IState {
-  blur: string;
+  blur: number;
   darkness: number;
   settingsDrawer: boolean;
 }

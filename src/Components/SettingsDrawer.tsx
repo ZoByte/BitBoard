@@ -10,7 +10,11 @@ import {
 } from "@material-ui/core";
 import { useSelector, useDispatch } from "react-redux";
 import { IState } from "../Redux/IState";
-import { ToggleSettingsDrawer, SetDarkness } from "../Redux/AppReducer";
+import {
+  ToggleSettingsDrawer,
+  SetDarkness,
+  SetBlur
+} from "../Redux/AppReducer";
 
 const DrawerStyles = makeStyles((theme: Theme) => ({
   root: {
@@ -24,11 +28,18 @@ const DrawerStyles = makeStyles((theme: Theme) => ({
 export const SettingsDrawer = () => {
   const dispatch = useDispatch();
   const classes = DrawerStyles();
-  const { settingsDrawer, darkness } = useSelector((state: IState) => state);
+  const { settingsDrawer, darkness, blur } = useSelector(
+    (state: IState) => state
+  );
 
   const updateDarkness = (event: any, value: number | number[]) => {
     if (typeof value === "number") {
       dispatch(SetDarkness(value));
+    }
+  };
+  const updateBlur = (event: any, value: number | number[]) => {
+    if (typeof value === "number") {
+      dispatch(SetBlur(value));
     }
   };
 
@@ -46,6 +57,15 @@ export const SettingsDrawer = () => {
           min={0}
           max={100}
           onChange={updateDarkness}
+        />
+        <Typography gutterBottom>Blur</Typography>
+        <Slider
+          defaultValue={blur}
+          valueLabelDisplay={"auto"}
+          step={5}
+          min={0}
+          max={100}
+          onChange={updateBlur}
         />
       </List>
     </Drawer>
