@@ -7,7 +7,7 @@ import { Settings } from "@material-ui/icons";
 import { BackgroundImage } from "./Components/BackgroundImage";
 import { Contrast } from "./Components/Contrast";
 import { store } from "./Redux/store";
-import { SetDarkness, ToggleSettingsDrawer } from "./Redux/AppReducer";
+import { ToggleSettingsDrawer } from "./Redux/AppReducer";
 import { SettingsDrawer } from "./Components/SettingsDrawer";
 
 const theme = createMuiTheme({
