@@ -7,7 +7,8 @@ import { Settings } from "@material-ui/icons";
 import { BackgroundImage } from "./Components/BackgroundImage";
 import { Contrast } from "./Components/Contrast";
 import { store } from "./Redux/store";
-import { SetDarkness } from "./Redux/AppReducer";
+import { SetDarkness, ToggleSettingsDrawer } from "./Redux/AppReducer";
+import { SettingsDrawer } from "./Components/SettingsDrawer";
 
 const theme = createMuiTheme({
   palette: {
@@ -23,10 +24,11 @@ const App = () => {
       <BackgroundImage />
       <Message message="hi" position={{ x: "15%", y: "3%", width: "50%" }} />
       <Contrast>
-        <IconButton onClick={() => dispatch(SetDarkness(10))}>
+        <IconButton onClick={() => dispatch(ToggleSettingsDrawer())}>
           <Settings />
         </IconButton>
       </Contrast>
+      <SettingsDrawer />
     </div>
   );
 };
