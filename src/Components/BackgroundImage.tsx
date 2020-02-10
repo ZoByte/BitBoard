@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { makeStyles, IconButton } from "@material-ui/core";
-import { Contrast } from "./Contrast";
 import { Settings } from "@material-ui/icons";
 import { SettingsDrawer } from "./SettingsDrawer";
 import { useSelector } from "react-redux";
