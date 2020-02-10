@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   createMuiTheme,
   ThemeProvider,
-  IconButton,
   Typography,
   Button,
   Fab
@@ -22,6 +21,20 @@ import { Grid } from "./Components/Grid";
 const theme = createMuiTheme({
   palette: {
     type: "dark"
+  },
+  props: {
+    MuiButtonBase: {
+      focusRipple: false
+    }
+  },
+  transitions: {
+    duration: {
+      shortest: 50,
+      shorter: 50,
+      short: 50,
+      standard: 50,
+      complex: 50
+    }
   }
 });
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { IState } from "../Redux/IState";
 import { IconButton } from "@material-ui/core";
@@ -13,6 +13,7 @@ export const Message = (props: {
   color?: string;
 }) => {
   const editing = useSelector((state: IState) => state.editing);
+  const [hovering, setHovering] = useState<boolean>(false);
 
   return (
     <div
@@ -23,8 +24,10 @@ export const Message = (props: {
         height: props.height
       }}
       className="Message"
+      onMouseEnter={() => setHovering(true)}
+      onMouseLeave={() => setHovering(false)}
     >
-      {editing ? (
+      {editing && hovering ? (
         <div style={{ float: "left", position: "absolute" }}>
           <IconButton>
             <Settings style={{ fontSize: 18 }} />

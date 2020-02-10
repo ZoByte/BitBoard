@@ -37,11 +37,9 @@ export const BackgroundImage = () => {
       <div className={styles.root}></div>
       {editing ? (
         <div style={{ position: "absolute" }}>
-          <Contrast>
-            <IconButton onClick={openSettings}>
-              <Settings />
-            </IconButton>
-          </Contrast>
+          <IconButton onClick={openSettings}>
+            <Settings />
+          </IconButton>
         </div>
       ) : (
         undefined
