@@ -52,9 +52,12 @@ h1 {
   width: 100%;
 }
 
-.Editing:hover {
-  background-color: rgba(0, 0, 0, 0.2);
+.Editing {
   user-select: none;
   pointer-events: all;
   cursor: pointer;
+}
+
+.Editing:hover {
+  background-color: rgba(0, 0, 0, 0.2);
 }

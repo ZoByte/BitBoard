@@ -8,10 +8,10 @@ import { useDrawer } from "./SettingsDrawer";
 
 export const Message = (props: {
   message: string;
-  x: string;
-  y: string;
-  width: string;
-  height: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
   color?: string;
 }) => {
   const drawer = useDrawer();

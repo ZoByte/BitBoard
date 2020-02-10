@@ -1,9 +1,9 @@
 type BaseBitComponent = {
   id: string;
-  x: string;
-  y: string;
-  width: string;
-  height: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 };
 
 export type BitComponent = BaseBitComponent &
