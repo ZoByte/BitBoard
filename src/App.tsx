@@ -17,10 +17,21 @@ import { ToggleEditing } from "./Redux/AppReducer";
 import { IState } from "./Redux/IState";
 import { BitComponent } from "./types";
 import { Grid } from "./Components/Grid";
+import { blue, purple } from "@material-ui/core/colors";
 
 const theme = createMuiTheme({
   palette: {
-    type: "dark"
+    type: "dark",
+    primary: {
+      main: blue[300],
+      light: blue[200],
+      dark: blue[400]
+    },
+    secondary: {
+      main: purple[300],
+      light: purple[200],
+      dark: purple[400]
+    }
   },
   props: {
     MuiButtonBase: {

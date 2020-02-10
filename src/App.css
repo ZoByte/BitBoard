@@ -15,7 +15,7 @@ h1 {
   pointer-events: none;
   height: 100vh;
   width: 100vw;
-  background-size: 10vw 10vh;
+  background-size: 5vw 5vh;
   background-image: radial-gradient(
       circle at top left,
       rgba(128, 128, 128, 0.2),

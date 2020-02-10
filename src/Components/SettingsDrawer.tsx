@@ -61,7 +61,7 @@ export const SettingsDrawer = (props: {
         {Object.keys(props.textBoxes).map(text => {
           return (
             <React.Fragment key={text}>
-              <Typography gutterBottom>Background Image Query</Typography>
+              <Typography gutterBottom>{text}</Typography>
               <Input
                 style={{ width: "100%" }}
                 value={props.textBoxes[text].get}
