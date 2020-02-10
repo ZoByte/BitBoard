@@ -21,7 +21,6 @@ const backgroundStyles = makeStyles({
 
 export const BackgroundImage = () => {
   const drawer = useDrawer();
-  const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
   const [blur, setBlur] = useState<number>(8);
   const [darkness, setDarkness] = useState<number>(30);
   const [bgQuery, setBGQuery] = useState<string>("mountains");

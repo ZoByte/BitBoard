@@ -13,32 +13,11 @@ function WithPayload<T>() {
   return (t: T) => ({ payload: t });
 }
 
-export const SetBlur = createAction("SET_BLUR", WithPayload<number>());
-export const SetDarkness = createAction("SET_DARKNESS", WithPayload<number>());
-export const SetBGQuery = createAction("SET_BG_QUERY", WithPayload<string>());
 export const ToggleEditing = createAction("TOGGLE_EDITING");
-export const ToggleSettingsDrawer = createAction("TOGGLE_SETTINGS_DRAWER");
 
 export const AppReducer = createReducer(appState, builder =>
-  builder
-    .addCase(SetBlur, (state, action) => ({
-      ...state,
-      blur: action.payload
-    }))
-    .addCase(SetDarkness, (state, action) => ({
-      ...state,
-      darkness: action.payload
-    }))
-    .addCase(SetBGQuery, (state, action) => ({
-      ...state,
-      bgQuery: action.payload
-    }))
-    .addCase(ToggleEditing, (state, action) => ({
-      ...state,
-      editing: !state.editing
-    }))
-    .addCase(ToggleSettingsDrawer, state => ({
-      ...state,
-      settingsDrawer: !state.settingsDrawer
-    }))
+  builder.addCase(ToggleEditing, (state, action) => ({
+    ...state,
+    editing: !state.editing
+  }))
 );
