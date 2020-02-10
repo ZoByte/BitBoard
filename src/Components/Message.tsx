@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { IState } from "../Redux/IState";
 import { IconButton } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
-import { SettingsDrawer } from "./SettingsDrawer";
 import { Draggable } from "./Draggable";
+import { useDrawer } from "./SettingsDrawer";
 
 export const Message = (props: {
   message: string;
@@ -14,10 +14,20 @@ export const Message = (props: {
   height: string;
   color?: string;
 }) => {
+  const drawer = useDrawer();
   const editing = useSelector((state: IState) => state.editing);
   const [hovering, setHovering] = useState<boolean>(false);
-  const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
   const [message, setMessage] = useState<string>(props.message);
+  const openSettings = () => {
+    drawer.setSliders({});
+    drawer.setTextBoxes({
+      Message: {
+        get: message,
+        set: setMessage
+      }
+    });
+    drawer.open();
+  };
 
   return (
     <Draggable editing={editing}>
@@ -35,7 +45,7 @@ export const Message = (props: {
         >
           {editing && hovering ? (
             <div style={{ float: "left", position: "absolute" }}>
-              <IconButton onClick={() => setSettingsOpen(true)}>
+              <IconButton onClick={openSettings}>
                 <Settings style={{ fontSize: 18 }} />
               </IconButton>
             </div>
@@ -44,17 +54,6 @@ export const Message = (props: {
           )}
           <h1 style={{ color: props.color }}>{message}</h1>
         </div>
-        <SettingsDrawer
-          open={settingsOpen}
-          setOpen={setSettingsOpen}
-          sliders={{}}
-          textBoxes={{
-            Message: {
-              get: message,
-              set: setMessage
-            }
-          }}
-        />
       </>
     </Draggable>
   );

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { makeStyles, IconButton } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
-import { SettingsDrawer } from "./SettingsDrawer";
 import { useSelector } from "react-redux";
 import { IState } from "../Redux/IState";
+import { useDrawer } from "./SettingsDrawer";
 
 const backgroundStyles = makeStyles({
   root: (props: { darkness: number; blur: number; bgQuery: string }) => ({
@@ -20,6 +20,7 @@ const backgroundStyles = makeStyles({
 });
 
 export const BackgroundImage = () => {
+  const drawer = useDrawer();
   const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
   const [blur, setBlur] = useState<number>(8);
   const [darkness, setDarkness] = useState<number>(30);
@@ -28,7 +29,23 @@ export const BackgroundImage = () => {
   const editing = useSelector((state: IState) => state.editing);
 
   const openSettings = () => {
-    setSettingsOpen(true);
+    drawer.setSliders({
+      Darkness: {
+        get: darkness,
+        set: setDarkness
+      },
+      Blur: {
+        get: blur,
+        set: setBlur
+      }
+    });
+    drawer.setTextBoxes({
+      "Image Query": {
+        get: bgQuery,
+        set: setBGQuery
+      }
+    });
+    drawer.open();
   };
 
   return (
@@ -43,26 +60,6 @@ export const BackgroundImage = () => {
       ) : (
         undefined
       )}
-      <SettingsDrawer
-        open={settingsOpen}
-        setOpen={setSettingsOpen}
-        sliders={{
-          Darkness: {
-            get: darkness,
-            set: setDarkness
-          },
-          Blur: {
-            get: blur,
-            set: setBlur
-          }
-        }}
-        textBoxes={{
-          "Image Query": {
-            get: bgQuery,
-            set: setBGQuery
-          }
-        }}
-      />
     </>
   );
 };

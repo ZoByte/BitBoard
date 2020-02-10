@@ -18,6 +18,7 @@ import { IState } from "./Redux/IState";
 import { BitComponent } from "./types";
 import { Grid } from "./Components/Grid";
 import { blue, purple } from "@material-ui/core/colors";
+import { DrawerProvider } from "./Components/SettingsDrawer";
 
 const theme = createMuiTheme({
   palette: {
@@ -117,7 +118,9 @@ const AppWithCTX = () => {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <App />
+        <DrawerProvider>
+          <App />
+        </DrawerProvider>
       </ThemeProvider>
     </Provider>
   );
