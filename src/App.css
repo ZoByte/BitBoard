@@ -48,9 +48,13 @@ h1 {
 
 .Message {
   text-align: center;
-  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
 .Editing:hover {
   background-color: rgba(0, 0, 0, 0.2);
+  user-select: none;
+  pointer-events: all;
+  cursor: pointer;
 }
