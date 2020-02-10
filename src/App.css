@@ -51,6 +51,6 @@ h1 {
   position: absolute;
 }
 
-.Message:hover {
+.Editing:hover {
   background-color: rgba(0, 0, 0, 0.2);
 }

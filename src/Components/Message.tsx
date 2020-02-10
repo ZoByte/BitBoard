@@ -4,6 +4,7 @@ import { IState } from "../Redux/IState";
 import { IconButton } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
 import { SettingsDrawer } from "./SettingsDrawer";
+import { Draggable } from "./Draggable";
 
 export const Message = (props: {
   message: string;
@@ -19,40 +20,42 @@ export const Message = (props: {
   const [message, setMessage] = useState<string>(props.message);
 
   return (
-    <>
-      <div
-        style={{
-          top: props.y,
-          left: props.x,
-          width: props.width,
-          height: props.height
-        }}
-        className="Message"
-        onMouseEnter={() => setHovering(true)}
-        onMouseLeave={() => setHovering(false)}
-      >
-        {editing && hovering ? (
-          <div style={{ float: "left", position: "absolute" }}>
-            <IconButton onClick={() => setSettingsOpen(true)}>
-              <Settings style={{ fontSize: 18 }} />
-            </IconButton>
-          </div>
-        ) : (
-          undefined
-        )}
-        <h1 style={{ color: props.color }}>{message}</h1>
-      </div>
-      <SettingsDrawer
-        open={settingsOpen}
-        setOpen={setSettingsOpen}
-        sliders={{}}
-        textBoxes={{
-          Message: {
-            get: message,
-            set: setMessage
-          }
-        }}
-      />
-    </>
+    <Draggable editing={editing}>
+      <>
+        <div
+          style={{
+            top: props.y,
+            left: props.x,
+            width: props.width,
+            height: props.height
+          }}
+          className={`Message ${editing ? "Editing" : undefined}`}
+          onMouseEnter={() => setHovering(true)}
+          onMouseLeave={() => setHovering(false)}
+        >
+          {editing && hovering ? (
+            <div style={{ float: "left", position: "absolute" }}>
+              <IconButton onClick={() => setSettingsOpen(true)}>
+                <Settings style={{ fontSize: 18 }} />
+              </IconButton>
+            </div>
+          ) : (
+            undefined
+          )}
+          <h1 style={{ color: props.color }}>{message}</h1>
+        </div>
+        <SettingsDrawer
+          open={settingsOpen}
+          setOpen={setSettingsOpen}
+          sliders={{}}
+          textBoxes={{
+            Message: {
+              get: message,
+              set: setMessage
+            }
+          }}
+        />
+      </>
+    </Draggable>
   );
 };
