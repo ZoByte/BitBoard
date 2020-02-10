@@ -12,6 +12,7 @@ h1 {
 
 .Grid {
   position: absolute;
+  pointer-events: none;
   height: 100vh;
   width: 100vw;
   background-size: 10vw 10vh;

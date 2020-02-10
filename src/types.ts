@@ -3,6 +3,7 @@ type BaseBitComponent = {
   x: string;
   y: string;
   width: string;
+  height: string;
 };
 
 export type BitComponent = BaseBitComponent &

@@ -4,7 +4,8 @@ import {
   ThemeProvider,
   IconButton,
   Typography,
-  Button
+  Button,
+  Fab
 } from "@material-ui/core";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import "./App.css";
@@ -42,7 +43,7 @@ const App = () => {
   return (
     <div className="App">
       <BackgroundImage />
-      <Grid />
+      {editing ? <Grid /> : undefined}
       {components.map((component: BitComponent) => {
         switch (component.type) {
           case "button": {
@@ -60,6 +61,7 @@ const App = () => {
                 x={component.x}
                 y={component.y}
                 width={component.width}
+                height={component.height}
                 color={component.color}
               />
             );
@@ -69,12 +71,10 @@ const App = () => {
           }
         }
       })}
-      <div style={{ position: "absolute", bottom: "0", right: "0" }}>
-        <Contrast>
-          <IconButton onClick={() => dispatch(ToggleEditing())}>
-            {editing ? <Check /> : <Edit />}
-          </IconButton>
-        </Contrast>
+      <div style={{ position: "absolute", bottom: "8px", right: "8px" }}>
+        <Fab color="primary" onClick={() => dispatch(ToggleEditing())}>
+          {editing ? <Check /> : <Edit />}
+        </Fab>
       </div>
       {editing ? (
         <div style={{ position: "absolute", bottom: 0, left: 0 }}>

@@ -9,6 +9,7 @@ export const Message = (props: {
   x: string;
   y: string;
   width: string;
+  height: string;
   color?: string;
 }) => {
   const editing = useSelector((state: IState) => state.editing);
@@ -18,12 +19,13 @@ export const Message = (props: {
       style={{
         top: props.y,
         left: props.x,
-        width: props.width
+        width: props.width,
+        height: props.height
       }}
       className="Message"
     >
       {editing ? (
-        <div style={{ float: "left" }}>
+        <div style={{ float: "left", position: "absolute" }}>
           <IconButton>
             <Settings style={{ fontSize: 18 }} />
           </IconButton>
