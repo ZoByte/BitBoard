@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+let initialPercentX = 0;
+let initialPercentY = 0;
+
 export const BitComponentBase = (props: {
   children: JSX.Element;
   editing: boolean;
@@ -18,19 +21,22 @@ export const BitComponentBase = (props: {
     if (dragging) {
       const percentX = (event.pageX / window.innerWidth) * 100;
       const percentY = (event.pageY / window.innerHeight) * 100;
-      console.log(Math.round(percentX / 10));
-      if (Math.round(percentX / 10) !== x) {
-        setX(Math.round(percentX / 10) * 10);
+      const offsetX = percentX - initialPercentX;
+      const offsetY = percentY - initialPercentY;
+      console.log({ offsetX, offsetY });
+      if (Math.floor(offsetX / 5) !== 0) {
+        setX(Math.floor(offsetX / 5) * 5);
       }
-      if (Math.round(percentY / 10) !== y) {
-        setY(Math.round(percentY / 10) * 10);
+      if (Math.floor(offsetY / 5) !== 0) {
+        setY(Math.floor(offsetY / 5) * 5);
       }
     }
   };
 
   const dragStart = (event: React.MouseEvent<HTMLElement>) => {
     if (props.editing) {
-      console.log(event.screenX);
+      initialPercentX = (event.pageX / window.innerWidth) * 100 - x;
+      initialPercentY = (event.pageY / window.innerHeight) * 100 - y;
       setDragging(true);
     }
   };
@@ -47,6 +53,7 @@ export const BitComponentBase = (props: {
       onMouseDown={dragStart}
       onMouseUp={dragEnd}
       onMouseMove={mouseMove}
+      onMouseLeave={dragEnd}
       style={{
         position: "absolute",
         top: `${y}%`,
