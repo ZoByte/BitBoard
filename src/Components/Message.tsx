@@ -39,7 +39,7 @@ export const Message = (props: {
     >
       <div
         className={`Message ${editing ? "Editing" : null}`}
-        onMouseEnter={() => setHovering(true)}
+        onMouseOver={() => setHovering(true)}
         onMouseLeave={() => setHovering(false)}
       >
         {editing && hovering ? (

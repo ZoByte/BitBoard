@@ -23,7 +23,6 @@ export const BitComponentBase = (props: {
       const percentY = (event.pageY / window.innerHeight) * 100;
       const offsetX = percentX - initialPercentX;
       const offsetY = percentY - initialPercentY;
-      console.log({ offsetX, offsetY });
       if (Math.floor(offsetX / 5) !== 0) {
         setX(Math.floor(offsetX / 5) * 5);
       }
@@ -44,7 +43,6 @@ export const BitComponentBase = (props: {
   const dragEnd = () => {
     if (props.editing && dragging) {
       setDragging(false);
-      console.log("drag end");
     }
   };
 
