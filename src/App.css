@@ -54,10 +54,17 @@ h1 {
 
 .Editing {
   user-select: none;
-  pointer-events: all;
   cursor: pointer;
 }
 
 .Editing:hover {
   background-color: rgba(0, 0, 0, 0.2);
+}
+
+.ResizeGrip {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  cursor: pointer;
 }
