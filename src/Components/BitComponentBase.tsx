@@ -144,14 +144,14 @@ export const BitComponentBase = ({
             setW(initialW - (snapX - initialX));
           }
           if (Math.floor(percentY / 5) >= 0) {
-            setY(y + (snapY - initialY));
+            setY(initialY + (snapY - initialY));
             setH(initialH - (snapY - initialY));
           }
           break;
         }
       }
     },
-    [setH, setW, setX, setY, x, y]
+    [setH, setW, setX, setY, x]
   );
 
   const resizeStart = (
