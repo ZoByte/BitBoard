@@ -172,10 +172,9 @@ export const BitComponentBase = ({
     if (resizing) {
       window.onmouseup = resizeEnd;
       window.onmousemove = resizeMove;
-    }
-    if (dragging) {
-      window.onmousemove = dragMove;
+    } else if (dragging) {
       window.onmouseup = dragEnd;
+      window.onmousemove = dragMove;
     }
   }, [dragEnd, dragMove, resizeMove, x, y, width, height]);
 
