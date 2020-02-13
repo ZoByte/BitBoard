@@ -177,7 +177,7 @@ export const BitComponentBase = ({
       window.onmousemove = dragMove;
       window.onmouseup = dragEnd;
     }
-  }, [dragEnd, dragMove, resizeMove]);
+  }, [dragEnd, dragMove, resizeMove, x, y, width, height]);
 
   return (
     <>
