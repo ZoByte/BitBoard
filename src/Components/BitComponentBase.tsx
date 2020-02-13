@@ -31,6 +31,12 @@ export const BitComponentBase = ({
   height
 }: BitComponentBaseProps) => {
   const dispatch = useDispatch();
+
+  const preventGhostDrag = (event: MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+
   const setX = useCallback(
     (inX: number) => {
       dispatch(SetPos({ id, x: inX, y }));
@@ -59,6 +65,7 @@ export const BitComponentBase = ({
   const dragMove = useCallback(
     (event: MouseEvent) => {
       if (dragging) {
+        preventGhostDrag(event);
         const percentX = (event.pageX / window.innerWidth) * 100;
         const percentY = (event.pageY / window.innerHeight) * 100;
         const offsetX = percentX - initialX;
@@ -100,6 +107,7 @@ export const BitComponentBase = ({
 
   const resizeMove = useCallback(
     (event: MouseEvent) => {
+      preventGhostDrag(event);
       const percentX = (event.pageX / window.innerWidth) * 100;
       const percentY = (event.pageY / window.innerHeight) * 100;
       const snapX = Math.floor(percentX / 5) * 5;
