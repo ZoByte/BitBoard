@@ -1,12 +1,17 @@
-import React, { useState } from "react";
-import { Button, Box } from "@material-ui/core";
+import React, { useEffect, useCallback } from "react";
+import { Box } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { SetPos, SetDimensions } from "../Redux/AppReducer";
 
-let initialPercentX = 0;
-let initialPercentY = 0;
-let initialPercentW = 0;
-let initialPercentH = 0;
+let initialX = 0;
+let initialY = 0;
+let initialW = 0;
+let initialH = 0;
+let dragging = false;
+let resizing = false;
+let currentCorner = 0;
 
-export const BitComponentBase = (props: {
+type BitComponentBaseProps = {
   children: JSX.Element;
   editing: boolean;
   id: string;
@@ -14,115 +19,165 @@ export const BitComponentBase = (props: {
   y: number;
   width: number;
   height: number;
-}) => {
-  const [dragging, setDragging] = useState<boolean>(false);
-  const [x, setX] = useState(props.x);
-  const [y, setY] = useState(props.x);
-  const [width, setWidth] = useState(props.width);
-  const [height, setHeight] = useState(props.height);
+};
 
-  const mouseMove = (event: MouseEvent) => {
-    if (dragging) {
-      const percentX = (event.pageX / window.innerWidth) * 100;
-      const percentY = (event.pageY / window.innerHeight) * 100;
-      const offsetX = percentX - initialPercentX;
-      const offsetY = percentY - initialPercentY;
-      if (Math.floor(offsetX / 5) >= 0) {
-        setX(Math.floor(offsetX / 5) * 5);
+export const BitComponentBase = ({
+  children,
+  editing,
+  id,
+  x,
+  y,
+  width,
+  height
+}: BitComponentBaseProps) => {
+  const dispatch = useDispatch();
+  const setX = useCallback(
+    (inX: number) => {
+      dispatch(SetPos({ id, x: inX, y }));
+    },
+    [dispatch, id, y]
+  );
+  const setY = useCallback(
+    (inY: number) => {
+      dispatch(SetPos({ id, x, y: inY }));
+    },
+    [dispatch, id, x]
+  );
+  const setW = useCallback(
+    (inW: number) => {
+      dispatch(SetDimensions({ id, width: inW, height }));
+    },
+    [dispatch, height, id]
+  );
+  const setH = useCallback(
+    (inH: number) => {
+      dispatch(SetDimensions({ id, width, height: inH }));
+    },
+    [dispatch, id, width]
+  );
+
+  const dragMove = useCallback(
+    (event: MouseEvent) => {
+      if (dragging) {
+        const percentX = (event.pageX / window.innerWidth) * 100;
+        const percentY = (event.pageY / window.innerHeight) * 100;
+        const offsetX = percentX - initialX;
+        const offsetY = percentY - initialY;
+        if (Math.floor(offsetX / 5) >= 0) {
+          setX(Math.floor(offsetX / 5) * 5);
+        }
+        if (Math.floor(offsetY / 5) >= 0) {
+          setY(Math.floor(offsetY / 5) * 5);
+        }
       }
-      if (Math.floor(offsetY / 5) >= 0) {
-        setY(Math.floor(offsetY / 5) * 5);
-      }
-    }
-  };
+    },
+    [setX, setY]
+  );
 
   const dragStart = (event: React.MouseEvent<HTMLElement>) => {
-    if (props.editing) {
-      initialPercentX = (event.pageX / window.innerWidth) * 100 - x;
-      initialPercentY = (event.pageY / window.innerHeight) * 100 - y;
-      window.onmousemove = mouseMove;
+    if (editing) {
+      initialX = (event.pageX / window.innerWidth) * 100 - x;
+      initialY = (event.pageY / window.innerHeight) * 100 - y;
+      window.onmousemove = dragMove;
       window.onmouseup = dragEnd;
-      setDragging(true);
+      dragging = true;
     }
   };
 
-  const dragEnd = () => {
-    if (props.editing && dragging) {
-      setDragging(false);
+  const dragEnd = useCallback(() => {
+    if (editing && dragging) {
+      dragging = false;
       window.onmousemove = null;
       window.onmouseup = null;
     }
-  };
+  }, [editing]);
 
   const resizeEnd = (event: MouseEvent) => {
+    resizing = false;
     window.onmouseup = null;
     window.onmousemove = null;
   };
 
-  const resizeMove = (event: MouseEvent, corner: number) => {
-    const percentX = (event.pageX / window.innerWidth) * 100;
-    const percentY = (event.pageY / window.innerHeight) * 100;
-    const snapX = Math.floor(percentX / 5) * 5;
-    const snapY = Math.floor(percentY / 5) * 5;
-    switch (corner) {
-      // bottom right
-      case 0: {
-        if (Math.floor(percentX / 5) >= 0) {
-          setWidth(width + (snapX - initialPercentX));
+  const resizeMove = useCallback(
+    (event: MouseEvent) => {
+      const percentX = (event.pageX / window.innerWidth) * 100;
+      const percentY = (event.pageY / window.innerHeight) * 100;
+      const snapX = Math.floor(percentX / 5) * 5;
+      const snapY = Math.floor(percentY / 5) * 5;
+      switch (currentCorner) {
+        // bottom right
+        case 0: {
+          if (Math.floor(percentX / 5) >= 0) {
+            setW(initialW + (snapX - initialX));
+          }
+          if (Math.floor(percentY / 5) >= 0) {
+            setH(initialH + (snapY - initialY));
+          }
+          break;
         }
-        if (Math.floor(percentY / 5) >= 0) {
-          setHeight(height + (snapY - initialPercentY));
+        // bottom left
+        case 1: {
+          if (Math.floor(percentX / 5) >= 0) {
+            setX(initialX + (snapX - initialX));
+            setW(initialW - (snapX - initialX));
+          }
+          if (Math.floor(percentY / 5) >= 0) {
+            setH(initialH + (snapY - initialY));
+          }
+          break;
         }
-        break;
+        // top right
+        case 2: {
+          if (Math.floor(percentX / 5) >= 0) {
+            setW(initialW + (snapX - initialX));
+          }
+          if (Math.floor(percentY / 5) >= 0) {
+            setY(initialY + (snapY - initialY));
+            setH(initialH - (snapY - initialY));
+          }
+          break;
+        }
+        // top left
+        case 3: {
+          if (Math.floor(percentX / 5) >= 0) {
+            setX(initialX + (snapX - x));
+            setW(initialW - (snapX - initialX));
+          }
+          if (Math.floor(percentY / 5) >= 0) {
+            setY(y + (snapY - initialY));
+            setH(initialH - (snapY - initialY));
+          }
+          break;
+        }
       }
-      // bottom left
-      case 1: {
-        if (Math.floor(percentX / 5) >= 0) {
-          setX(x + (snapX - initialPercentX));
-          setWidth(width - (snapX - initialPercentX));
-        }
-        if (Math.floor(percentY / 5) >= 0) {
-          setHeight(height + (snapY - initialPercentY));
-        }
-        break;
-      }
-      // top right
-      case 2: {
-        if (Math.floor(percentX / 5) >= 0) {
-          setWidth(width + (snapX - initialPercentX));
-        }
-        if (Math.floor(percentY / 5) >= 0) {
-          setY(y + (snapY - initialPercentY));
-          setHeight(height - (snapY - initialPercentY));
-        }
-        break;
-      }
-      // top left
-      case 3: {
-        if (Math.floor(percentX / 5) >= 0) {
-          setX(x + (snapX - x));
-          setWidth(width - (snapX - initialPercentX));
-        }
-        if (Math.floor(percentY / 5) >= 0) {
-          setY(y + (snapY - initialPercentY));
-          setHeight(height - (snapY - initialPercentY));
-        }
-        break;
-      }
-    }
-  };
+    },
+    [setH, setW, setX, setY, x, y]
+  );
 
   const resizeStart = (
     event: React.MouseEvent<HTMLElement>,
     corner: number
   ) => {
-    initialPercentW = width;
-    initialPercentH = height;
-    initialPercentX = (event.pageX / window.innerWidth) * 100;
-    initialPercentY = (event.pageY / window.innerHeight) * 100;
+    initialX = (event.pageX / window.innerWidth) * 100;
+    initialY = (event.pageY / window.innerHeight) * 100;
+    initialW = width;
+    initialH = height;
+    resizing = true;
+    currentCorner = corner;
     window.onmouseup = resizeEnd;
-    window.onmousemove = (event: MouseEvent) => resizeMove(event, corner);
+    window.onmousemove = resizeMove;
   };
+
+  useEffect(() => {
+    if (resizing) {
+      window.onmouseup = resizeEnd;
+      window.onmousemove = resizeMove;
+    }
+    if (dragging) {
+      window.onmousemove = dragMove;
+      window.onmouseup = dragEnd;
+    }
+  }, [dragEnd, dragMove, resizeMove]);
 
   return (
     <>
@@ -136,11 +191,11 @@ export const BitComponentBase = (props: {
           width: `${width}%`,
           height: `${height}%`
         }}
-        className={props.editing ? "Editing" : undefined}
+        className={editing ? "Editing" : undefined}
       >
-        {props.children}
+        {children}
       </div>
-      {props.editing ? (
+      {editing ? (
         <>
           <Box
             component="div"
