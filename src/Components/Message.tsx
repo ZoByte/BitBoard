@@ -5,15 +5,9 @@ import { IconButton } from "@material-ui/core";
 import { Settings } from "@material-ui/icons";
 import { BitComponentBase } from "./BitComponentBase";
 import { useDrawer } from "./SettingsDrawer";
+import { MessageProps } from "../types";
 
-export const Message = (props: {
-  message: string;
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  color?: string;
-}) => {
+export const Message = (props: MessageProps) => {
   const drawer = useDrawer();
   const editing = useSelector((state: IState) => state.editing);
   const [hovering, setHovering] = useState<boolean>(false);
@@ -32,6 +26,7 @@ export const Message = (props: {
   return (
     <BitComponentBase
       editing={editing}
+      id={props.id}
       x={props.x}
       y={props.y}
       width={props.width}

@@ -9,6 +9,7 @@ let initialPercentH = 0;
 export const BitComponentBase = (props: {
   children: JSX.Element;
   editing: boolean;
+  id: string;
   x: number;
   y: number;
   width: number;

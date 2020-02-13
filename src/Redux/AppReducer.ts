@@ -8,7 +8,7 @@ const appState: IState = {
   bgQuery: "mountains",
   editing: false,
   settingsDrawer: false,
-  components: []
+  components: {}
 };
 
 function WithPayload<T>() {
@@ -18,11 +18,25 @@ function WithPayload<T>() {
 export const ToggleEditing = createAction("TOGGLE_EDITING");
 export const SetComponents = createAction(
   "SET_COMPONENTS",
-  WithPayload<BitComponent[]>()
+  WithPayload<{
+    [id: string]: BitComponent;
+  }>()
 );
 export const AddComponent = createAction(
   "ADD_COMPONENT",
   WithPayload<BitComponent>()
+);
+export const SetPos = createAction(
+  "SET_POS",
+  WithPayload<{ id: string; x: number; y: number }>()
+);
+export const SetDimensions = createAction(
+  "SET_DIMENSIONS",
+  WithPayload<{
+    id: string;
+    width: number;
+    height: number;
+  }>()
 );
 
 export const AppReducer = createReducer(appState, builder =>
@@ -37,6 +51,31 @@ export const AppReducer = createReducer(appState, builder =>
     }))
     .addCase(AddComponent, (state, action) => ({
       ...state,
-      components: [...state.components, action.payload]
+      components: {
+        ...state.components,
+        [action.payload.id]: action.payload
+      }
+    }))
+    .addCase(SetPos, (state, action) => ({
+      ...state,
+      components: {
+        ...state.components,
+        [action.payload.id]: {
+          ...state.components[action.payload.id],
+          x: action.payload.x,
+          y: action.payload.y
+        }
+      }
+    }))
+    .addCase(SetDimensions, (state, action) => ({
+      ...state,
+      components: {
+        ...state.components,
+        [action.payload.id]: {
+          ...state.components[action.payload.id],
+          width: action.payload.width,
+          height: action.payload.height
+        }
+      }
     }))
 );

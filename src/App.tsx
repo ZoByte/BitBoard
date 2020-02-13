@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   createMuiTheme,
   ThemeProvider,
@@ -13,9 +13,8 @@ import { BackgroundImage } from "./Components/BackgroundImage";
 import { store } from "./Redux/store";
 import { Contrast } from "./Components/Contrast";
 import { Edit, Check } from "@material-ui/icons";
-import { ToggleEditing } from "./Redux/AppReducer";
+import { ToggleEditing, SetComponents } from "./Redux/AppReducer";
 import { IState } from "./Redux/IState";
-import { BitComponent } from "./types";
 import { Grid } from "./Components/Grid";
 import { blue, purple } from "@material-ui/core/colors";
 import { DrawerProvider } from "./Components/SettingsDrawer";
@@ -52,24 +51,32 @@ const theme = createMuiTheme({
 
 const App = () => {
   const dispatch = useDispatch();
-  const [components, setComponents] = useState<BitComponent[]>([]);
-  const editing = useSelector((state: IState) => state.editing);
+  const { editing, components } = useSelector((state: IState) => state);
 
   useEffect(() => {
     const rawComponents = localStorage.getItem("components");
     if (typeof rawComponents === "string") {
       const parsedComponents = JSON.parse(rawComponents);
-      if (Array.isArray(parsedComponents)) {
-        setComponents(parsedComponents as BitComponent[]);
+      if (typeof parsedComponents === "object") {
+        dispatch(SetComponents(parsedComponents));
       }
     }
-  }, []);
+  }, [dispatch]);
+
+  const handleEditToggle = () => {
+    if (editing) {
+      console.log(components);
+      localStorage.setItem("components", JSON.stringify(components));
+    }
+    dispatch(ToggleEditing());
+  };
 
   return (
     <div className="App">
       <BackgroundImage />
       {editing ? <Grid /> : undefined}
-      {components.map((component: BitComponent) => {
+      {Object.keys(components).map((id: string) => {
+        const component = components[id];
         switch (component.type) {
           case "button": {
             return (
@@ -81,7 +88,8 @@ const App = () => {
           case "message": {
             return (
               <Message
-                key={component.id}
+                key={id}
+                id={id}
                 message={component.message}
                 x={component.x}
                 y={component.y}
@@ -97,7 +105,7 @@ const App = () => {
         }
       })}
       <div style={{ position: "absolute", bottom: "8px", right: "8px" }}>
-        <Fab color="primary" onClick={() => dispatch(ToggleEditing())}>
+        <Fab color="primary" onClick={handleEditToggle}>
           {editing ? <Check /> : <Edit />}
         </Fab>
       </div>

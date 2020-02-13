@@ -6,5 +6,7 @@ export interface IState {
   bgQuery: string;
   editing: boolean;
   settingsDrawer: boolean;
-  components: BitComponent[];
+  components: {
+    [id: string]: BitComponent;
+  };
 }
